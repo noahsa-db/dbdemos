@@ -108,14 +108,17 @@ class DBClient():
                     return c
         return None
 
-    def find_job(self, name, offset = 0, limit = 25):
-        r = self.get("2.1/jobs/list", {"limit": limit, "offset": offset, "name": urllib.parse.quote_plus(name)})
+    def find_job(self, name):
+        """
+        Args:
+            name (str): Name of the job
+
+        Returns:
+            list: List of jobs with matching names
+        """
+        r = self.get('2.1/jobs/list', {'name': urllib.parse.quote_plus(name)})
         if 'jobs' in r:
-            for job in r['jobs']:
-                if job["settings"]["name"] == name:
-                    return job
-            if r['has_more']:
-                return self.find_job(name, offset+limit, limit)
+            return r['jobs']
         return None
 
 class DemoNotebook():
