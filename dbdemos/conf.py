@@ -95,19 +95,6 @@ class DBClient():
             print(f"API CALL ERROR - can't read json. status: {r.status_code} {r.text} - URL: {url} - {e}")
             raise e
 
-    def search_cluster(self, cluster_name: str, tags: dict):
-        clusters = self.db.get("2.1/clusters/list")
-        for c in clusters:
-            if c['cluster_name'] == cluster_name:
-                match = True
-                #Check if all the tags are in the cluster conf
-                for k, v in tags.items():
-                    if k not in c['custom_tags'] or c['custom_tags'][k] != v:
-                        match = False
-                if match:
-                    return c
-        return None
-
     def find_job(self, name):
         """
         Args:
