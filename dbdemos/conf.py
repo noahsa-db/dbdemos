@@ -5,8 +5,6 @@ import requests
 import urllib
 import re
 
-from requests import Response
-
 
 def merge_dict(a, b, path=None, override = True):
     """merges dict b into a. Mutate a"""
@@ -85,7 +83,7 @@ class DBClient():
         with requests.delete(url, headers = self.conf.headers, params=params, timeout=60) as r:
             return self.get_json_result(url, r)
 
-    def get_json_result(self, url: str, r: Response):
+    def get_json_result(self, url: str, r: requests.Response):
         if r.status_code == 403:
             print(f"Unauthorized call. Check your PAT token {r.text} - {r.url} - {url}")
         try:
