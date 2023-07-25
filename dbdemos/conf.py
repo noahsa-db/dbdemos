@@ -3,7 +3,6 @@ from pathlib import Path
 
 import requests
 import urllib
-from datetime import date
 import re
 
 from requests import Response
@@ -208,6 +207,6 @@ class ConfTemplate:
         for key in set(re.findall(r'\{\{(.*?)\}\}', text)):
             if not key.startswith("DYNAMIC") and not key.startswith("SHARED_WAREHOUSE"):
                 func = getattr(self, f"template_{key}")
-                replace∂ment = func()
+                replacement = func()
                 text = text.replace("{{"+key+"}}", replacement)
         return text
