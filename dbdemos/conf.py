@@ -96,13 +96,6 @@ class DBClient():
             raise e
 
     def find_job(self, name):
-        """
-        Args:
-            name (str): Name of the job
-
-        Returns:
-            list: List of jobs with matching names
-        """
         r = self.get('2.1/jobs/list', {'name': urllib.parse.quote_plus(name)})
         if 'jobs' in r:
             return r['jobs']
