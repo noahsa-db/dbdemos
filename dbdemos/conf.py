@@ -117,10 +117,6 @@ class DemoNotebook():
     def __repr__(self):
         return self.path
 
-    def get_folder(self):
-        p = Path(self.get_clean_path())
-        p.parts
-
     def get_clean_path(self):
         #Some notebook path are relatives, like ../../demo-retail/lakehouse-retail/_resources/xxx
         # DThis function removes it and returns _resources/xxx
@@ -129,10 +125,6 @@ class DemoNotebook():
         if parent_count > 0:
             return str(p.relative_to(*p.parts[:parent_count*2-1]))
         return self.path
-
-
-    def toJSON(self):
-        return json.dumps(self, default=lambda o: o.__dict__)
 
 class DemoConf():
     def __init__(self, path: str, json_conf: dict):
@@ -212,30 +204,10 @@ class ConfTemplate:
         self.demo_name = demo_name
         self.demo_folder = demo_folder
 
-    def template_TODAY(self):
-        return date.today().strftime("%Y-%m-%d")
-
-    def template_CURRENT_USER(self):
-        return self.username
-
-    def template_CURRENT_USER_NAME(self):
-        name = self.username[:self.username.rfind('@')]
-        name = re.sub("[^A-Za-z0-9]", '_', name)
-        return name
-
-    def template_DEMO_NAME(self):
-        return self.demo_name
-
-    def template_DEMO_FOLDER(self):
-        return self.demo_folder
-
-    def template_SHARED_WAREHOUSE_ID(self):
-        return self.demo_folder
-
     def replace_template_key(self, text: str):
         for key in set(re.findall(r'\{\{(.*?)\}\}', text)):
             if not key.startswith("DYNAMIC") and not key.startswith("SHARED_WAREHOUSE"):
                 func = getattr(self, f"template_{key}")
-                replacement = func()
+                replace∂ment = func()
                 text = text.replace("{{"+key+"}}", replacement)
         return text
